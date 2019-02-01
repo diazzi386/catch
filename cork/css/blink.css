@@ -1,0 +1,8 @@
+.blinking {
+	animation: 1.5s blink step-end infinite;
+}
+
+@keyframes blink {
+  from, to 		{ opacity: 0; }
+  			50% { opacity: 1; }
+}

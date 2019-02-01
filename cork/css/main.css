@@ -1,0 +1,112 @@
+body * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+	font-family: 'Roboto Mono', monospace !important;
+}
+
+* {
+	outline: none !important;
+	text-decoration: none;
+	box-sizing: border-box !important;
+	color: inherit;
+	line-height: 24px;
+	font-size: 14px;
+}
+
+a {
+	text-decoration: underline;
+}
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+	width: 100%;
+	min-width: 320px;
+	min-height: 320px;
+	overflow-x: hidden;
+}
+
+#title {
+    position: absolute;
+	padding: 0 16px;
+	top: 16px;
+	left: 16px;
+	right: 16px;
+	height: 24px;
+	overflow: hidden;
+	white-space: pre;
+	overflow: hidden;
+	display: block;
+}
+
+#score {
+    position: absolute;
+	padding: 0 16px;
+	top: 16px;
+	right: 16px;
+	height: 24px;
+	text-align: right;
+	overflow: hidden;
+	white-space: pre;
+	overflow: hidden;
+	display: block;
+}
+
+#output {
+    position: absolute;
+	padding: 0 16px;
+	top: 48px;
+	bottom: 48px;
+	right: -18px;
+	left: 0;
+	overflow-y: scroll;
+}
+
+#output p {
+	margin: 0;
+	padding: 0 18px;
+	white-space: pre-wrap;
+}
+
+#input {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	bottom: 16px;
+	height: 24px;
+	left: 16px;
+	right: 16px;
+}
+
+#command {
+	border: none;
+	padding: 0 16px;
+	height: 24px;
+	left: 0;
+	right: 0;
+	width: 100%;
+}
+
+#terminal {
+	position: absolute;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: block;
+}
+
+#terminal > * {
+	position:relative;
+}

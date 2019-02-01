@@ -1,0 +1,8 @@
+.ul { text-decoration: underline !important; }
+.center {text-align: center !important; }
+.uc {text-transform: uppercase !important; }
+.node { text-decoration: underline !important; }
+.kbd { border: 1px solid white; padding: 1px; margin-right: 10px !important; }
+.it { font-style: italic; }
+.bold { font-weight: bold; }
+.ilb { display: inline-block; }
