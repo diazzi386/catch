@@ -36,7 +36,7 @@ Cork.IO = {
 	}, init: function (game) {
 		Cork.Theme.load();
 		Cork.IO.title(game);
-		Cork.IO.score();
+		// Cork.IO.score();
 	}
 };
 
