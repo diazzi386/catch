@@ -1,5 +1,5 @@
 Cork = {
-	game: null,
+	GAME: null,
 	_ROOM: null,
 	_REGISTRY: {},
 	// output_buffer: [],
@@ -89,7 +89,7 @@ Cork.Story = function (title) {
 	this.tagline = "A text adventure";
 	this.blurb = "";
 	this.about = "See also: help, credits.";
-	this.credits = "A game by Felix Pleșoianu";
+	this.credits = "A GAME by Felix Pleșoianu";
 	this.player = new Cork.Actor("yourself");
 	this.player.altname("myself", "me");
 	this.version = null;
@@ -154,7 +154,7 @@ Cork.Story.prototype = {
 		Cork.say("You wait. Time passes.");
 	}, $help: function (actor) {
 		Cork.say(
-			"Direct the game with one- to three-word commands.\n"
+			"Direct the GAME with one- to three-word commands.\n"
 			+ "For example: 'look', 'pick up key', 'examine it',"
 			+ " 'inventory', 'go north'.\n"
 			+ "Some of these have abbreviations, like"
@@ -178,10 +178,10 @@ Cork.Story.prototype = {
 		this.commands.pop();
 		localStorage["save"] = this.commands;
 	}, $load: function () {
-		commands = localStorage["save"].split(",");
-		for (var i = 0; i < TO_DO.length; i++)
-			Cork.IO.parser.parse(command[i].toLowerCase())
-		localStorage["save"] = [];
+		todo = localStorage["save"].split(",");
+		for (var i = 0; i < todo.length; i++)
+			Cork.IO.parser.parse(todo[i].toLowerCase())
+		delete localStorage["save"];
 	}, $license: function () {
 		Cork.say(this.license);
 	}
@@ -470,7 +470,7 @@ Cork.ObjectMixin.apply(Cork.Thing.prototype);
 Cork.ThingMixin.apply(Cork.Thing.prototype);
 
 Cork.parser = function (story) {
-	story = story || Cork.game;
+	story = story || Cork.GAME;
 	this.story = story;
 	this.it = undefined;
 };
@@ -478,7 +478,7 @@ Cork.parser = function (story) {
 Cork.parser.prototype = {
 	parse: function (command) {
 		// Cork.say(this.story.turns + "> " + command);
-		Cork.game.commands.push(command);
+		Cork.GAME.commands.push(command);
 		if (this.story.ended) {
 			Cork.say("Sorry, the story has ended.");
 			return;

@@ -140,7 +140,7 @@ broom = thing("broom", "An ordinary broom, and Mitzi's nemesis.")
 exit("south to living room").altname("s", "out").to(room("Living room"));
 
 room("Balcony").$jump_off = room("Balcony").$jump_from =
-	"Nooooo! Don't jump! Life is beautiful! And you have a game to win!";
+	"Nooooo! Don't jump! Life is beautiful! And you have a GAME to win!";
 broom.$use = "Aww! But you just swept the floors yesterday.";
 broom.$wave = broom.$shake = broom.$show = function (actor) {
 	if (mitzi.location != actor.location) {
@@ -176,7 +176,7 @@ exit("west to the outside").altname("w")
 		.via(door("outside door"));
 
 door("outside door").is("locked").key = thing("keychain");
-key = thing("keychain").is("portable").move(null); // Remove from game for now.
+key = thing("keychain").is("portable").move(null); // Remove from GAME for now.
 key.altname("key", "keys", "chain").$use = "Try unlocking a door.";
 thing("cellphone").altname("mobile", "phone").move(null)
 	.$use = "You try to call the vet and reschedule the appointment,"

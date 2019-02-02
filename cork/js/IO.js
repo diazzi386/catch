@@ -17,8 +17,8 @@ Cork.IO = {
 		Cork.IO.get('output').innerHTML += string;
 		Cork.IO.scroll();
 	}, title: function () {
-		if (Cork.game && Cork.game.title)
-		document.title = Cork.IO.get('title').innerHTML = Cork.game.title + " - " + Cork.game.tagline + " by " + Cork.game.author;
+		if (Cork.GAME && Cork.GAME.title)
+		document.title = Cork.IO.get('title').innerHTML = Cork.GAME.title + " - " + Cork.GAME.tagline + " by " + Cork.GAME.author;
 	}, score: function () {
 		Cork.IO.get('score').innerHTML = Cork._VERSION;
 	}, achievement: function (no, message) {
