@@ -1,5 +1,5 @@
-Game = {
-	_STORY: null,
+Cork = {
+	game: null,
 	_ROOM: null,
 	_REGISTRY: {},
 	// output_buffer: [],
@@ -36,7 +36,7 @@ Game = {
 			if (typeof (target[before]) == "function") {
 				if (target[before](actor)) return true;
 			} else {
-				Game.say(Game.handle_value(target[before]));
+				Cork.say(Cork.handle_value(target[before]));
 				return true;
 			}
 		}
@@ -44,7 +44,7 @@ Game = {
 		if (typeof (target[action]) == "function") {
 			target[action](actor);
 		} else {
-			Game.say(Game.handle_value(target[action]));
+			Cork.say(Cork.handle_value(target[action]));
 		}
 
 		var after = "after" + action;
@@ -52,7 +52,7 @@ Game = {
 			if (typeof (target[after]) == "function") {
 				target[after](actor);
 			} else {
-				Game.say(Game.handle_value(target[after]));
+				Cork.say(Cork.handle_value(target[after]));
 			}
 		}
 
@@ -69,7 +69,7 @@ Game = {
 			return value();
 		} else if (typeof (value) == "object") {
 			if (value.constructor == Array) {
-				return Game.random_pick(value);
+				return Cork.random_pick(value);
 			} else {
 				return value.toString();
 			}
@@ -82,7 +82,7 @@ Game = {
 	}
 };
 
-Game.Story = function (title) {
+Cork.Story = function (title) {
 	this.title = title || "Untitled";
 	this.author = "Anonymous";
 	this.date = new Date(2010, 3, 10);
@@ -90,7 +90,7 @@ Game.Story = function (title) {
 	this.blurb = "";
 	this.about = "See also: help, credits.";
 	this.credits = "A game by Felix Pleșoianu";
-	this.player = new Game.Actor("yourself");
+	this.player = new Cork.Actor("yourself");
 	this.player.altname("myself", "me");
 	this.version = null;
 	this.first_room = null;
@@ -113,47 +113,47 @@ Game.Story = function (title) {
 		"SOFTWARE.\n\n";
 };
 
-Game.Story.prototype = {
+Cork.Story.prototype = {
 	start: function () {
 		this.player.move(this.first_room);
 		this.turns = 0;
 		this.commands = [];
 		this.ended = false;
-		Game.say(this.blurb + "\n\n");
-		Game.say(this.title + "\n"
+		Cork.say(this.blurb + "\n\n");
+		Cork.say(this.title + "\n"
 			+ this.tagline + " by " + this.author + "\n"
 			+ "(first time players please type 'help')\n\n"
 			+ this.date.toString().split(" ").slice(0, 4).join(" "));
-		Game.handle_action(this, "$look", this.player);
+		Cork.handle_action(this, "$look", this.player);
 	}, advance: function () {
 		if (this.ended) return;
 		
-		var actors = Game._REGISTRY[this.title].ACTORS;
+		var actors = Cork._REGISTRY[this.title].ACTORS;
 		for (var i in actors) actors[i].act();
 
 		var objects = this.player.scope();
 		for (var i = 0; i < objects.length; i++) {
 			if (objects[i] && objects[i].heremsg)
-				Game.say(Game.handle_value(
+				Cork.say(Cork.handle_value(
 					objects[i].heremsg));
 		}
 		
 		this.turns++;
 	}, the_end: function (message) {
 		this.ended = true;
-		Game.say("*** " + message + " ***");
+		Cork.say("*** " + message + " ***");
 	},
 	// Intransitive verbs.
 	$look: function (actor) {
-		Game.handle_action(actor.location, "$examine", actor);
+		Cork.handle_action(actor.location, "$examine", actor);
 	}, $cork: function (actor) {
-		Game.say("At your service!");
+		Cork.say("At your service!");
 	}, $inventory: function (actor) {
-		Game.say("You are carrying: " + Game.list(actor.children) + ".");
+		Cork.say("You are carrying: " + Cork.list(actor.children) + ".");
 	}, $wait: function (actor) {
-		Game.say("You wait. Time passes.");
+		Cork.say("You wait. Time passes.");
 	}, $help: function (actor) {
-		Game.say(
+		Cork.say(
 			"Direct the game with one- to three-word commands.\n"
 			+ "For example: 'look', 'pick up key', 'examine it',"
 			+ " 'inventory', 'go north'.\n"
@@ -163,17 +163,17 @@ Game.Story.prototype = {
 			+ " e.g. many objects have an 'use' verb.\n"
 			+ "See also: 'about', 'credits', 'license'.");
 	}, $about: function (actor) {
-		Game.say(this.about);
+		Cork.say(this.about);
 	}, $credits: function (actor) {
-		Game.say(
+		Cork.say(
 			this.title + "\n" +
 			this.tagline + " by " + this.author + "\n" +
 			this.credits
 		);
 	}, $version: function (actor) {
-		Game.say(this.version);
+		Cork.say(this.version);
 	}, $score: function (actor) {
-		Game.say("Commands entered: " + this.turns + ".");
+		Cork.say("Commands entered: " + this.turns + ".");
 	}, $save: function (actor) {
 		this.commands.pop();
 		localStorage["save"] = this.commands;
@@ -183,16 +183,16 @@ Game.Story.prototype = {
 			Cork.IO.parser.parse(command[i].toLowerCase())
 		localStorage["save"] = [];
 	}, $license: function () {
-		Game.say(this.license);
+		Cork.say(this.license);
 	}
 };
 
-Game.Story.prototype.$l = Game.Story.prototype.$look;
-Game.Story.prototype.$i = Game.Story.prototype.$inventory;
-Game.Story.prototype.$inv = Game.Story.prototype.$inventory;
-Game.Story.prototype.$v = Game.Story.prototype.$version;
+Cork.Story.prototype.$l = Cork.Story.prototype.$look;
+Cork.Story.prototype.$i = Cork.Story.prototype.$inventory;
+Cork.Story.prototype.$inv = Cork.Story.prototype.$inventory;
+Cork.Story.prototype.$v = Cork.Story.prototype.$version;
 
-Game.ObjectMixin = function() {
+Cork.ObjectMixin = function() {
 	this.toString = function () {
 		return this.name;
 	};
@@ -243,25 +243,25 @@ Game.ObjectMixin = function() {
 
 	this.$examine = function (actor) {
 		if (!actor.location.dark) {
-			Game.say(this.describe()
+			Cork.say(this.describe()
 				|| "You see nothing special.");
 		} else {
-			Game.say("It's too dark to see much.");
+			Cork.say("It's too dark to see much.");
 		}
 	};
 
 	this.$x = this.$l = this.$look = this.$look_at =
 		function (actor) {
-			Game.handle_action(this, "$examine", actor);
+			Cork.handle_action(this, "$examine", actor);
 		};
 	
 	this.$search = "You find nothing worth mentioning.";
 	this.$look_in = function (actor) {
-		Game.handle_action(this, "$search", actor);
+		Cork.handle_action(this, "$search", actor);
 	};
 };
 
-Game.ContainerMixin = function () {
+Cork.ContainerMixin = function () {
 	this.addChild = function (object) {
 		if (!this.children) this.children = [];
 		for (var i = 0; i < this.children.length; i++)
@@ -291,7 +291,7 @@ Game.ContainerMixin = function () {
 	};
 };
 
-Game.ThingMixin = function() {
+Cork.ThingMixin = function() {
 	this.move = function (container) {
 		if (this.location) this.location.removeChild(this);
 		if (container) container.addChild(this);
@@ -301,61 +301,61 @@ Game.ThingMixin = function() {
 	
 	this.$take = function (actor) {
 		if (this.location == actor) {
-			Game.say("You already have that.");
+			Cork.say("You already have that.");
 		} else if (this.location != actor.location) {
-			Game.say("I don't see that here.");
+			Cork.say("I don't see that here.");
 		} else if (this.portable) {
 			this.move(actor);
-			Game.say("Taken.");
+			Cork.say("Taken.");
 		} else {
-			Game.say("You can't.");
+			Cork.say("You can't.");
 		}
 	};
 
 	this.$get = this.$grab = this.$pick_up = this.$t =
 		function (actor) {
-			Game.handle_action(this, "$take", actor);
+			Cork.handle_action(this, "$take", actor);
 		};
 	
 	this.$drop = function (actor) {
 		for (var i = 0; i < actor.children.length; i++) {
 			if (actor.children[i] == this) {
 				this.move(actor.location);
-				Game.say("Dropped.");
+				Cork.say("Dropped.");
 				return;
 			}
 		}
-		Game.say("You don't have that.");
+		Cork.say("You don't have that.");
 	}
 	this.$throw = function (actor) {
-		Game.handle_action(this, "$drop", actor);
+		Cork.handle_action(this, "$drop", actor);
 	}
 }
 
-Game.Room = function (name, description) {
+Cork.Room = function (name, description) {
 	this.name = name;
 	this.description = description;
 	this.parse_name(this.name);
 	this.exits = [];
 };
 
-Game.ObjectMixin.apply(Game.Room.prototype);
-Game.ContainerMixin.apply(Game.Room.prototype);
+Cork.ObjectMixin.apply(Cork.Room.prototype);
+Cork.ContainerMixin.apply(Cork.Room.prototype);
 
-Game.Room.prototype.$examine = function (actor) {
+Cork.Room.prototype.$examine = function (actor) {
 	if (!actor.location.dark) {
-		Game.say("\n" + actor.location.name + "\n"
+		Cork.say("\n" + actor.location.name + "\n"
 			+ actor.location.describe());
-		Game.say("You see: "
-			+ Game.list(actor.location.children) + ".");
-		Game.say("Obvious exits: "
-			+ Game.list(actor.location.exits) + ".");
+		Cork.say("You see: "
+			+ Cork.list(actor.location.children) + ".");
+		Cork.say("Obvious exits: "
+			+ Cork.list(actor.location.exits) + ".");
 	} else {
-		Game.say("It's dark, you can't see much at all.");
+		Cork.say("It's dark, you can't see much at all.");
 	}
 };
 
-Game.Exit = function (name, description) {
+Cork.Exit = function (name, description) {
 	this.name = name;
 	this.description = description || "You see nothing special.";
 	this.parse_name(this.name);
@@ -365,7 +365,7 @@ Game.Exit = function (name, description) {
 	};
 };
 
-Game.Exit.prototype = {
+Cork.Exit.prototype = {
 	to: function (room) {
 		this.target = room;
 		return this;
@@ -375,75 +375,75 @@ Game.Exit.prototype = {
 	}, $go: function (actor) {
 		if (this.door && this.door.locked) {
 			if (actor.has(this.door.key)) {
-				Game.say("(first unlocking the door)");
+				Cork.say("(first unlocking the door)");
 				this.door.locked = false;
 			} else {
-				Game.say("It's locked"
+				Cork.say("It's locked"
 					+ " and you don't have the key.");
 				return;
 			}
 		}
 		if (this.door && this.door.travelmsg) {
-			Game.say(this.door.travelmsg);
+			Cork.say(this.door.travelmsg);
 		} else if (this.travelmsg) {
-			Game.say(this.travelmsg);
+			Cork.say(this.travelmsg);
 		}
 		actor.move(this.target);
-		Game.handle_action(actor.location, "$examine", actor);
+		Cork.handle_action(actor.location, "$examine", actor);
 	}, $lock: function (actor) {
 		if (this.door) {
 			if (actor.has(this.door.key)) {
 				if (this.locked) {
-					Game.say("Already locked.");
+					Cork.say("Already locked.");
 				} else {
-					Game.say("You lock the door.");
+					Cork.say("You lock the door.");
 					this.door.locked = true;
 				}
 			} else {
-				Game.say("You don't have the key.");
+				Cork.say("You don't have the key.");
 			}
 		} else {
-			Game.say("There's nothing to lock");
+			Cork.say("There's nothing to lock");
 		}
 	}, $unlock: function (actor) {
 		if (this.door) {
 			if (actor.has(this.door.key)) {
 				if (!this.locked) {
-					Game.say("Already unlocked.");
+					Cork.say("Already unlocked.");
 				} else {
-					Game.say("You unlock the door.");
+					Cork.say("You unlock the door.");
 					this.door.locked = false;
 				}
 			} else {
-				Game.say("You don't have the key.");
+				Cork.say("You don't have the key.");
 			}
 		} else {
-			Game.say("There's nothing to unlock");
+			Cork.say("There's nothing to unlock");
 		}
 	}, $open: function(actor) {
-		Game.say("No need.");
+		Cork.say("No need.");
 	}, $close: function(actor) {
-		Game.say("No need.");
+		Cork.say("No need.");
 	}
 };
-Game.ObjectMixin.apply(Game.Exit.prototype);
-Game.ThingMixin.apply(Game.Exit.prototype);
+Cork.ObjectMixin.apply(Cork.Exit.prototype);
+Cork.ThingMixin.apply(Cork.Exit.prototype);
 
-Game.Door = function (name, description) {
+Cork.Door = function (name, description) {
 	this.name = name;
 	this.description = description || "You see nothing special.";
 };
-Game.ObjectMixin.apply(Game.Door.prototype);
-Game.ThingMixin.apply(Game.Door.prototype);
+Cork.ObjectMixin.apply(Cork.Door.prototype);
+Cork.ThingMixin.apply(Cork.Door.prototype);
 
-Game.Actor = function (name, description) {
+Cork.Actor = function (name, description) {
 	this.name = name;
 	this.parse_name(this.name);
 	this.description = description || "You see nothing special.";
 	this.portable = true;
 };
 
-Game.Actor.prototype = {
+Cork.Actor.prototype = {
 	act: function () { },
 	scope: function () {
 		return [].concat(
@@ -452,51 +452,52 @@ Game.Actor.prototype = {
 			this.location.exits,
 			this.children);
 	}, $talk_to: function (actor) {
-		Game.say(this.name + " doesn't seem interested in talking.");
+		Cork.say(this.name + " doesn't seem interested in talking.");
 	}
 };
 
-Game.ObjectMixin.apply(Game.Actor.prototype);
-Game.ThingMixin.apply(Game.Actor.prototype);
-Game.ContainerMixin.apply(Game.Actor.prototype);
+Cork.ObjectMixin.apply(Cork.Actor.prototype);
+Cork.ThingMixin.apply(Cork.Actor.prototype);
+Cork.ContainerMixin.apply(Cork.Actor.prototype);
 
-Game.Thing = function (name, description) {
+Cork.Thing = function (name, description) {
 	this.name = name;
 	this.description = description || "You see nothing special.";
 	this.parse_name(this.name);
 };
 
-Game.ObjectMixin.apply(Game.Thing.prototype);
-Game.ThingMixin.apply(Game.Thing.prototype);
+Cork.ObjectMixin.apply(Cork.Thing.prototype);
+Cork.ThingMixin.apply(Cork.Thing.prototype);
 
-Game.parser = function (story) {
+Cork.parser = function (story) {
+	story = story || Cork.game;
 	this.story = story;
 	this.it = undefined;
 };
 
-Game.parser.prototype = {
+Cork.parser.prototype = {
 	parse: function (command) {
-		// Game.say(this.story.turns + "> " + command);
-		Game._STORY.commands.push(command);
+		// Cork.say(this.story.turns + "> " + command);
+		Cork.game.commands.push(command);
 		if (this.story.ended) {
-			Game.say("Sorry, the story has ended.");
+			Cork.say("Sorry, the story has ended.");
 			return;
 		}
 		var words = command.split(" ");
 		var player = this.story.player;
 		if (words.length == 0) {
-			Game.say("I beg your pardon?");
+			Cork.say("I beg your pardon?");
 		} else if (words.length == 1 || words.length > 3) {
 			var verb = words.join("_");
 			var action = "$" + verb;
-			if (Game.handle_action(this.story, action, player))
+			if (Cork.handle_action(this.story, action, player))
 				return;
 			else if (!this.handle_exit(verb, player))
-				Game.say("I don't know how.");
+				Cork.say("I don't know how.");
 		} else if (words.length == 3) {
 			var verb = words.join("_");
 			var action = "$" + verb;
-			if (Game.handle_action(this.story, action, player)) {
+			if (Cork.handle_action(this.story, action, player)) {
 				return;
 			} else {
 				var verb = words[0] + "_" + words[1];
@@ -507,7 +508,7 @@ Game.parser.prototype = {
 		} else if (words.length == 2) {
 			var verb = words.join("_");
 			var action = "$" + verb;
-			if (Game.handle_action(this.story, action, player)) {
+			if (Cork.handle_action(this.story, action, player)) {
 				return;
 			} else {
 				verb = words[0];
@@ -524,13 +525,13 @@ Game.parser.prototype = {
 			return this.it;
 		} else {
 			var objects = this.story.player.scope();
-			return Game.find_in_scope(objects, nouns[0]);
+			return Cork.find_in_scope(objects, nouns[0]);
 		}
 	}, handle_exit: function (word, actor) {
 		var exits = actor.location.exits;
-		var exit = Game.find_in_scope(exits, word);
+		var exit = Cork.find_in_scope(exits, word);
 		if (exit != null) {
-			Game.handle_action(exit, "$go", actor);
+			Cork.handle_action(exit, "$go", actor);
 			return true;
 		} else {
 			return false;
@@ -538,16 +539,16 @@ Game.parser.prototype = {
 	}, handle_sentence: function (target, verb, actor) {
 		var action = "$" + verb;
 		if (target === undefined) {
-			Game.say("I don't know what you mean by"
+			Cork.say("I don't know what you mean by"
 				+ " 'it' right now.");
 		} else if (target === null) {
-			Game.say("I don't see that here.");
+			Cork.say("I don't see that here.");
 		} else if (target[action] == null) {
-			Game.say("I don't know how to "
+			Cork.say("I don't know how to "
 				+ verb + " the " + target + ".");
 			this.it = target;
 		} else {
-			Game.handle_action(target, action, actor);
+			Cork.handle_action(target, action, actor);
 			this.it = target;
 		}
 	}

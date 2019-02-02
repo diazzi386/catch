@@ -1,8 +1,8 @@
 window.onload = function () {
-	Game._STORY.start();
-	Game._STORY.advance();
-	Cork.IO.init(Game);
-	Cork.IO.parser = new Game.parser(Game._STORY);
+	Cork.game.start();
+	Cork.game.advance();
+	Cork.IO.init();
+	Cork.IO.parser = new Cork.parser();
 
 	for (var i = 0; i < Cork.IO.buffer.length; i++)
 		Cork.IO.write(Cork.IO.buffer[i]);
@@ -15,7 +15,7 @@ window.onload = function () {
 		Cork.IO.write("> " + command, Theme.done);
 		Cork.IO.get('command').value = "";
 		Cork.IO.parser.parse(command.toLowerCase().trim());
-		Game._STORY.advance();
+		Cork.game.advance();
 
 		for (var i = 0; i < Cork.IO.buffer.length; i++)
 			Cork.IO.write(Cork.IO.buffer[i]);

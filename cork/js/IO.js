@@ -1,6 +1,4 @@
-var Cork = {};
-
-Cork._VERSION = "0.3.2";
+Cork._VERSION = "0.3.5";
 Cork._BUILD = "FEB, 2019";
 
 Cork.IO = {
@@ -19,8 +17,8 @@ Cork.IO = {
 		Cork.IO.get('output').innerHTML += string;
 		Cork.IO.scroll();
 	}, title: function () {
-		if (Game._STORY && Game._STORY.title)
-		document.title = Cork.IO.get('title').innerHTML = Game._STORY.title + " - " + Game._STORY.tagline + " by " + Game._STORY.author;
+		if (Cork.game && Cork.game.title)
+		document.title = Cork.IO.get('title').innerHTML = Cork.game.title + " - " + Cork.game.tagline + " by " + Cork.game.author;
 	}, score: function () {
 		Cork.IO.get('score').innerHTML = Cork._VERSION;
 	}, achievement: function (no, message) {

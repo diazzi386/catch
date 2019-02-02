@@ -1,7 +1,7 @@
 function story(name) {
-	Game._STORY = new Game.Story(name);
-	if (!Game._REGISTRY[name]) {
-		Game._REGISTRY[name] = {
+	Cork.game = new Cork.Story(name);
+	if (!Cork._REGISTRY[name]) {
+		Cork._REGISTRY[name] = {
 			ROOMS: {},
 			THINGS: {},
 			ACTORS: {},
@@ -9,73 +9,73 @@ function story(name) {
 			DOORS: {}
 		};
 	}
-	return Game._STORY;
+	return Cork.game;
 }
 
 function room(name, description) {
-	if (Game._REGISTRY[Game._STORY.title].ROOMS[name]) {
-		return Game._REGISTRY[Game._STORY.title].ROOMS[name];
+	if (Cork._REGISTRY[Cork.game.title].ROOMS[name]) {
+		return Cork._REGISTRY[Cork.game.title].ROOMS[name];
 	} else {
-		var new_room = new Game.Room(name, description);
-		Game._REGISTRY[Game._STORY.title].ROOMS[name] = new_room;
-		if (Game._STORY.first_room == null) {
-			Game._STORY.first_room = new_room;
+		var new_room = new Cork.Room(name, description);
+		Cork._REGISTRY[Cork.game.title].ROOMS[name] = new_room;
+		if (Cork.game.first_room == null) {
+			Cork.game.first_room = new_room;
 		}
 		return new_room;
 	}
 }
 
 function current(room) {
-	if (room instanceof Game.Room) {
-		Game._ROOM = room;
+	if (room instanceof Cork.Room) {
+		Cork._ROOM = room;
 	}
-	return Game._ROOM;
+	return Cork._ROOM;
 }
 
 function thing(name, description) {
-	if (Game._REGISTRY[Game._STORY.title].THINGS[name]) {
-		return Game._REGISTRY[Game._STORY.title].THINGS[name];
+	if (Cork._REGISTRY[Cork.game.title].THINGS[name]) {
+		return Cork._REGISTRY[Cork.game.title].THINGS[name];
 	} else {
-		var new_thing = new Game.Thing(name, description);
-		Game._REGISTRY[Game._STORY.title].THINGS[name] = new_thing;
-		if (Game._ROOM != null) new_thing.move(Game._ROOM);
+		var new_thing = new Cork.Thing(name, description);
+		Cork._REGISTRY[Cork.game.title].THINGS[name] = new_thing;
+		if (Cork._ROOM != null) new_thing.move(Cork._ROOM);
 		return new_thing;
 	}
 }
 
 function actor(name, description) {
-	if (Game._REGISTRY[Game._STORY.title].ACTORS[name]) {
-		return Game._REGISTRY[Game._STORY.title].ACTORS[name];
+	if (Cork._REGISTRY[Cork.game.title].ACTORS[name]) {
+		return Cork._REGISTRY[Cork.game.title].ACTORS[name];
 	} else {
-		var new_actor = new Game.Actor(name, description);
-		Game._REGISTRY[Game._STORY.title].ACTORS[name] = new_actor;
-		if (Game._ROOM != null) new_actor.move(Game._ROOM);
+		var new_actor = new Cork.Actor(name, description);
+		Cork._REGISTRY[Cork.game.title].ACTORS[name] = new_actor;
+		if (Cork._ROOM != null) new_actor.move(Cork._ROOM);
 		return new_actor;
 	}
 }
 
 function exit(name, description) {
-	if (Game._REGISTRY[Game._STORY.title].EXITS[name]) {
-		return Game._REGISTRY[Game._STORY.title].EXITS[name];
+	if (Cork._REGISTRY[Cork.game.title].EXITS[name]) {
+		return Cork._REGISTRY[Cork.game.title].EXITS[name];
 	} else {
-		var new_exit = new Game.Exit(name, description);
-		Game._REGISTRY[Game._STORY.title].EXITS[name] = new_exit;
-		if (Game._ROOM != null) new_exit.move(Game._ROOM);
+		var new_exit = new Cork.Exit(name, description);
+		Cork._REGISTRY[Cork.game.title].EXITS[name] = new_exit;
+		if (Cork._ROOM != null) new_exit.move(Cork._ROOM);
 		return new_exit;
 	}
 }
 
 function door(name, description) {
-	if (Game._REGISTRY[Game._STORY.title].DOORS[name]) {
-		return Game._REGISTRY[Game._STORY.title].DOORS[name];
+	if (Cork._REGISTRY[Cork.game.title].DOORS[name]) {
+		return Cork._REGISTRY[Cork.game.title].DOORS[name];
 	} else {
-		var new_door = new Game.Door(name, description);
-		Game._REGISTRY[Game._STORY.title].DOORS[name] = new_door;
-		//if (Game._ROOM != null) new_door.move(Game._ROOM);
+		var new_door = new Cork.Door(name, description);
+		Cork._REGISTRY[Cork.game.title].DOORS[name] = new_door;
+		//if (Cork._ROOM != null) new_door.move(Cork._ROOM);
 		return new_door;
 	}
 }
 
 function say(message) {
-	Game.say(message);
+	Cork.say(message);
 }
