@@ -1,0 +1,30 @@
+n
+t broom
+s
+nw
+t crate
+o
+t bottle
+w
+n
+search clothes
+s
+w
+d
+o
+store
+drop crate
+drop beer
+borrow tools
+o
+fix car
+search car
+in
+fix light
+flip light
+d
+drop carrier
+wave broom
+u
+o
+enter car	#

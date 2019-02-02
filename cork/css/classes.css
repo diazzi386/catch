@@ -1,6 +1,7 @@
 .ul { text-decoration: underline !important; }
 .center {text-align: center !important; }
 .uc {text-transform: uppercase !important; }
+.cc {text-transform: capitalize !important; }
 .node { text-decoration: underline !important; }
 .kbd { border: 1px solid white; padding: 1px; margin-right: 10px !important; }
 .it { font-style: italic; }

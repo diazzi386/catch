@@ -20,7 +20,8 @@
 		<div id="score"></div>
 		<div id="output"></div>
 		<form id="input">
-			<input id="command" autofocus autocomplete="off" placeholder="What am I supposed to do?">
+			<input id="command" autofocus autocomplete="off" placeholder="What am I supposed to do?"
+				onblur="setTimeout(function(){Cork.IO.get('command').focus()},10)">
 		</form>
 
         <script type="text/javascript" src="cork/js/IO.js"></script>

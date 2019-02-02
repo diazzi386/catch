@@ -33,6 +33,7 @@ s.about = "Catch that cat is the official tech demo for the Jaiffa library.";
 s.credits =
 	"Alpha testers: a hovering egg, a Sitka deer and a batty blue bat.\n"
 	+ "Beta testers: Abbey Spracklin and Nightwrath.";
+s.version = "0.1.0";
 	
 s.player.description =
 	"You look at your hairy arms, dirty T-shirt and worn-out jeans, and wiggle"
@@ -100,7 +101,8 @@ mitzi.act = function() {
 			say("Mitzi gives the broom a wide berth.");
 		}
 	}
-}
+};
+
 exit("north to balcony").altname("n").to(room("Balcony"));
 exit("northwest to kitchen").altname("nw").to(room("Kitchen"));
 exit("west to hallway").altname("w", "out").to(room("Hallway"));
@@ -162,7 +164,7 @@ crate = thing("beer crate",
 		.is("portable");
 crate.after$examine = "The last slot is broken and can't hold a bottle.";
 crate.$empty = "Better not, you'll need to return it and the bottles.";
-exit("Out to living room").altname("se", "o").to(room("Living room"));
+exit("out to living room").altname("se", "o").to(room("Living room"));
 k.$clean = "The kitchen is such a mess, you wouldn't know where to start.";
 
 current(room("Hallway"));
@@ -207,7 +209,7 @@ current(room("11th floor"));
 exit("east to your apartment").altname("e")
 	.to(room("Hallway"))
 		.via(door("outside door"));	
-exit("Down the stairs").altname("d").to(room("Ground floor"))
+exit("down the stairs").altname("d").to(room("Ground floor"))
 	.travelmsg = "You trot down the 11 flights of stairs. Sigh.";
 	
 lift = thing("elevator");
@@ -218,20 +220,20 @@ lift.$call = lift.$use = function (actor) {
 lift.react_before = function (actor, action, target) {
 	if (action != "$go")
 		return;
-	else if (target == exit("Down the stairs"))
+	else if (target == exit("down the stairs"))
 		this.move(room("Ground floor"));
-	else if (target == exit("Up the stairs"))
+	else if (target == exit("up the stairs"))
 		this.move(room("11th floor"));
 }
 
 current(room("Ground floor"));
 light = thing("light switch", "It's hanging by a wire.");
-exit("Up the stairs").altname("u").to(room("11th floor"))
+exit("up the stairs").altname("u").to(room("11th floor"))
 	.travelmsg = "You trot up the 11 flights of stairs. Sigh.";	
-exit("Down to basement").altname("d")
+exit("down to basement").altname("d")
 	.to(room("Basement"))
 		.via(door("basement door"));
-exit("Out of the building").altname("outside", "o", "exit", "leave")
+exit("out of the building").altname("outside", "o", "exit", "leave")
 	.to(room("Outside your apartment building"));
 
 door("basement door").is("locked").key = thing("keychain");
@@ -247,7 +249,7 @@ light.$fix = light.$repair = function (actor) {
 	} else {
 		say("You need tools for that.");
 	}
-}
+};
 light.$flip = light.$use = function (actor) {
 	if (this.working) {
 		room("Basement").dark = !room("Basement").dark;
@@ -255,13 +257,13 @@ light.$flip = light.$use = function (actor) {
 	} else {
 		say("The light switch is in no condition to be flipped.");
 	}
-}
+};
 
 current(room("Basement")).is("dark");
 room("Basement").desc(
 	"A vast room, silent and damp, subdivided by flimsy plywood walls."
 	+ " Ridiculously, big padlocks adorn stall doors a kid could break.");
-exit("Up to ground floor").altname("u", "out", "o")
+exit("up to ground floor").altname("u", "out", "o")
 	.to(room("Ground floor"))
 		.via(door("basement door"));
 	
@@ -286,7 +288,7 @@ car.$fix = car.$change = car.$repair = function (actor) {
 	} else {
 		"You need tools for that.";
 	}
-}
+};
 car.$drive = car.$get_in = car.$enter = car.$use = function (actor) {
 	if (!this.working) {
 		say("Your car isn't going anywhere with a flat tire.");
@@ -297,7 +299,7 @@ car.$drive = car.$get_in = car.$enter = car.$use = function (actor) {
 			+ " the vet. About halfway there, you run out of gas.");
 		s.the_end("You have won!");
 	}
-}
+};
 car.$open = car.$close = car.$lock = car.$unlock = function (actor) {
 	if (actor.has(key)) {
 		say("You play with the remote and double-check the doors."
@@ -359,11 +361,11 @@ toolkit.$borrow = toolkit.$get; // 'borrow' redirects properly no matter what.
 toolkit.$request = toolkit.$get;
 toolkit.$buy = '"Sorry, that\'s not for sale," says Mr. Petrescu.';
 toolkit.$use = "You probably want to fix something.";
-exit("Out of the shop").altname("outside", "o", "exit", "leave")
+exit("out of the shop").altname("outside", "o", "exit", "leave")
 	.to(room("Outside your apartment building"));
 
 bottle.after$drop = function (actor) {
-	if (this.location == room("Corner shop")) {
+	if (this.location == room("Corner store")) {
 		this.move(null);
 		say('You put the bottle on the counter.'
 			+ ' "I believe you wanted this back?"');
@@ -372,7 +374,7 @@ bottle.after$drop = function (actor) {
 	}
 }
 thing("beer crate").after$drop = function (actor) {
-	if (this.location == room("Corner shop")) {
+	if (this.location == room("Corner store")) {
 		this.move(null);
 		say('You carefully set the crate down by the counter.'
 			+ ' "I believe you wanted this back?"');

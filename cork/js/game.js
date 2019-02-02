@@ -92,6 +92,7 @@ Game.Story = function (title) {
 	this.credits = "Based on the Jiffo library by David A. Wheeler, which was based on the Jaiffa library by Felix Pleșoianu.";
 	this.player = new Game.Actor("yourself");
 	this.player.altname("myself", "me");
+	this.version = null;
 	this.first_room = null;
 };
 
@@ -142,15 +143,18 @@ Game.Story.prototype = {
 			+ " E.g. many objects have an 'use' verb.");
 		Game.say("See also: about, credits.");
 	}, $about: function (actor) {
-		Game.say(Game.handle_value(this.about));
+		Game.say(this.about);
 	}, $credits: function (actor) {
-		Game.say(Game.handle_value(this.credits));
+		Game.say(this.credits);
+	}, $version: function (actor) {
+		Game.say(this.version);
 	}
 };
 
 Game.Story.prototype.$l = Game.Story.prototype.$look;
 Game.Story.prototype.$i = Game.Story.prototype.$inventory;
 Game.Story.prototype.$inv = Game.Story.prototype.$inventory;
+Game.Story.prototype.$v = Game.Story.prototype.$version;
 
 Game.ObjectMixin = function() {
 	this.toString = function () {
@@ -192,6 +196,11 @@ Game.ObjectMixin = function() {
 		return this;
 	};
 
+	this.has = function (what, howmuch) {
+		this[what] = howmuch;
+		return this;
+	};
+
 	this.describe = function () {
 		return this.description || "";
 	};
@@ -205,7 +214,7 @@ Game.ObjectMixin = function() {
 		}
 	};
 
-	this.$ex = this.$x = this.$l = this.$look = this.$look_at =
+	this.$x = this.$l = this.$look = this.$look_at =
 		function (actor) {
 			Game.handle_action(this, "$examine", actor);
 		};
