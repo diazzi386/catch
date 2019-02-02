@@ -177,11 +177,14 @@ Cork.Story.prototype = {
 	}, $save: function (actor) {
 		this.commands.pop();
 		localStorage["save"] = this.commands;
+		Cork.say("Saved.");
 	}, $load: function () {
+		if (!localStorage || !localStorage["save"])
+			return Cork.say("No saved files found.");
 		todo = localStorage["save"].split(",");
 		for (var i = 0; i < todo.length; i++)
 			Cork.IO.parser.parse(todo[i].toLowerCase())
-		delete localStorage["save"];
+		localStorage["save"] = [];
 	}, $license: function () {
 		Cork.say(this.license);
 	}
