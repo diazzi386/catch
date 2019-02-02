@@ -171,7 +171,7 @@ Cork.Story.prototype = {
 			this.credits
 		);
 	}, $version: function (actor) {
-		Cork.say(this.version);
+		Cork.say(Cork._VERSION);
 	}, $score: function (actor) {
 		Cork.say("Commands entered: " + this.turns + ".");
 	}, $save: function (actor) {
