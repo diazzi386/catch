@@ -1,3 +1,25 @@
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+// Luca Diazzi <diazzi386@gmail.com> for Cork
+// Felix Pleșoianu <felixp7@yahoo.com> for Jaiffa
+// David A. Wheeler <dwheeler@dwheeler.com> for Jiffo
+
 Game = {
 	_STORY: null,
 	_ROOM: null,
@@ -100,6 +122,7 @@ Game.Story.prototype = {
 	start: function () {
 		this.player.move(this.first_room);
 		this.turns = 0;
+		this.commands = [];
 		this.ended = false;
 		Game.say(this.blurb + "\n\n");
 		Game.say(this.title + "\n"
@@ -148,6 +171,16 @@ Game.Story.prototype = {
 		Game.say(this.credits);
 	}, $version: function (actor) {
 		Game.say(this.version);
+	}, $score: function (actor) {
+		Game.say("Commands entered: " + this.turns + ".");
+	}, $save: function (actor) {
+		this.commands.pop();
+		localStorage["save"] = this.commands;
+	}, $load: function () {
+		commands = localStorage["save"].split(",");
+		for (var i = 0; i < TO_DO.length; i++)
+			Cork.IO.parser.parse(command[i].toLowerCase())
+		localStorage["save"] = [];
 	}
 };
 
@@ -441,6 +474,7 @@ Game.parser = function (story) {
 Game.parser.prototype = {
 	parse: function (command) {
 		// Game.say(this.story.turns + "> " + command);
+		Game._STORY.commands.push(command);
 		if (this.story.ended) {
 			Game.say("Sorry, the story has ended.");
 			return;

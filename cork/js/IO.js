@@ -20,10 +20,10 @@ Cork.IO = {
 		Cork.IO.scroll();
 	}, title: function (game) {
 		if (game._STORY && game._STORY.title)
-		document.title = game._STORY.title + ' - Play IF on CORK!';
+		document.title = game._STORY.title + ' - powered by CORK!';
 		Cork.IO.get('title').innerHTML = game._STORY.title;
 	}, score: function () {
-		Cork.IO.get('score').innerHTML = "MOVES 000 / SCORE 0000";
+		Cork.IO.get('score').innerHTML = Cork._VERSION;
 	}, achievement: function (no, message) {
 		message = message ? message + ": " : "";
 		Cork.IO.write(message + "+" + no + " POINTS!", Theme.achievement);
@@ -36,7 +36,7 @@ Cork.IO = {
 	}, init: function (game) {
 		Cork.Theme.load();
 		Cork.IO.title(game);
-		// Cork.IO.score();
+		Cork.IO.score();
 	}
 };
 
