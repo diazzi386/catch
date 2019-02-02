@@ -130,7 +130,7 @@ Game.Story.prototype = {
 	}, $cork: function (actor) {
 		Game.say("At your service!");
 	}, $inventory: function (actor) {
-		Game.say("You are carrying: " + Game.list(actor.children));
+		Game.say("You are carrying: " + Game.list(actor.children) + ".");
 	}, $wait: function (actor) {
 		Game.say("You wait. Time passes.");
 	}, $help: function (actor) {
@@ -312,7 +312,7 @@ Game.Room.prototype.$examine = function (actor) {
 
 Game.Exit = function (name, description) {
 	this.name = name;
-	this.description = description || "You see nothing special";
+	this.description = description || "You see nothing special.";
 	this.parse_name(this.name);
 	this.move = function (room) {
 		room.exits.push(this);
@@ -386,7 +386,7 @@ Game.ThingMixin.apply(Game.Exit.prototype);
 
 Game.Door = function (name, description) {
 	this.name = name;
-	this.description = description || "You see nothing special";
+	this.description = description || "You see nothing special.";
 };
 Game.ObjectMixin.apply(Game.Door.prototype);
 Game.ThingMixin.apply(Game.Door.prototype);
@@ -394,7 +394,7 @@ Game.ThingMixin.apply(Game.Door.prototype);
 Game.Actor = function (name, description) {
 	this.name = name;
 	this.parse_name(this.name);
-	this.description = description || "You see nothing special";
+	this.description = description || "You see nothing special.";
 	this.portable = true;
 };
 
@@ -417,7 +417,7 @@ Game.ContainerMixin.apply(Game.Actor.prototype);
 
 Game.Thing = function (name, description) {
 	this.name = name;
-	this.description = description || "You see nothing special";
+	this.description = description || "You see nothing special.";
 	this.parse_name(this.name);
 };
 
