@@ -182,8 +182,11 @@ Cork.Story.prototype = {
 		if (!localStorage || !localStorage["save"])
 			return Cork.say("No saved files found.");
 		todo = localStorage["save"].split(",");
-		for (var i = 0; i < todo.length; i++)
+		for (var i = 0; i < todo.length; i++) {
+			if (todo[i].toLowerCase().includes("load"))
+				continue;
 			Cork.IO.parser.parse(todo[i].toLowerCase())
+		}
 		localStorage["save"] = [];
 	}, $license: function () {
 		Cork.say(this.license);
