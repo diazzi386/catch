@@ -122,7 +122,7 @@ Game.Story.prototype = {
 		this.turns++;
 	}, the_end: function (message) {
 		this.ended = true;
-		Game.say("<b>*** " + message + " ***</b>");
+		Game.say("*** " + message + " ***");
 	},
 	// Intransitive verbs.
 	$look: function (actor) {
@@ -396,22 +396,21 @@ Game.Actor = function (name, description) {
 	this.parse_name(this.name);
 	this.description = description || "You see nothing special";
 	this.portable = true;
-}
+};
+
 Game.Actor.prototype = {
 	act: function () { },
-	
 	scope: function () {
 		return [].concat(
 			this.location,
 			this.location.children,
 			this.location.exits,
 			this.children);
-	},
-	
-	$talk_to: function (actor) {
+	}, $talk_to: function (actor) {
 		Game.say(this.name + " doesn't seem interested in talking.");
 	}
-}
+};
+
 Game.ObjectMixin.apply(Game.Actor.prototype);
 Game.ThingMixin.apply(Game.Actor.prototype);
 Game.ContainerMixin.apply(Game.Actor.prototype);
@@ -420,7 +419,7 @@ Game.Thing = function (name, description) {
 	this.name = name;
 	this.description = description || "You see nothing special";
 	this.parse_name(this.name);
-}
+};
 
 Game.ObjectMixin.apply(Game.Thing.prototype);
 Game.ThingMixin.apply(Game.Thing.prototype);
@@ -432,7 +431,6 @@ Game.parser = function (story) {
 
 Game.parser.prototype = {
 	parse: function (command) {
-		Cork.IO.write("> " + command, Theme.done);
 		// Game.say(this.story.turns + "> " + command);
 		if (this.story.ended) {
 			Game.say("Sorry, the story has ended.");
@@ -475,18 +473,14 @@ Game.parser.prototype = {
 			var target = this.pick_target(words[2]);
 			this.handle_sentence(target, verb, player);
 		}
-	},
-	
-	pick_target: function (nouns) {
+	}, pick_target: function (nouns) {
 		if (nouns[0] == "it") {
 			return this.it;
 		} else {
 			var objects = this.story.player.scope();
 			return Game.find_in_scope(objects, nouns[0]);
 		}
-	},
-	
-	handle_exit: function (word, actor) {
+	}, handle_exit: function (word, actor) {
 		var exits = actor.location.exits;
 		var exit = Game.find_in_scope(exits, word);
 		if (exit != null) {
@@ -495,9 +489,7 @@ Game.parser.prototype = {
 		} else {
 			return false;
 		}
-	},
-	
-	handle_sentence: function (target, verb, actor) {
+	}, handle_sentence: function (target, verb, actor) {
 		var action = "$" + verb;
 		if (target === undefined) {
 			Game.say("I don't know what you mean by"
@@ -513,4 +505,4 @@ Game.parser.prototype = {
 			this.it = target;
 		}
 	}
-}
+};
