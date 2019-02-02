@@ -1,6 +1,6 @@
 var Cork = {};
 
-Cork._VERSION = "0.3.0";
+Cork._VERSION = "0.3.2";
 Cork._BUILD = "FEB, 2019";
 
 Cork.IO = {
@@ -18,24 +18,25 @@ Cork.IO = {
 		string = "<p" + (cname == undefined? "" : " class='" + cname + "'" ) + ">" + string + "</p>";
 		Cork.IO.get('output').innerHTML += string;
 		Cork.IO.scroll();
-	}, title: function (game) {
-		if (game._STORY && game._STORY.title)
-		document.title = game._STORY.title + ' - powered by CORK!';
-		Cork.IO.get('title').innerHTML = game._STORY.title;
+	}, title: function () {
+		if (Game._STORY && Game._STORY.title)
+		document.title = Cork.IO.get('title').innerHTML = Game._STORY.title + " - " + Game._STORY.tagline + " by " + Game._STORY.author;
 	}, score: function () {
 		Cork.IO.get('score').innerHTML = Cork._VERSION;
 	}, achievement: function (no, message) {
+		/*
 		message = message ? message + ": " : "";
 		Cork.IO.write(message + "+" + no + " POINTS!", Theme.achievement);
+		*/
 	}, error: function (message) {
 		Cork.IO.write("CORK IO SERVICE: ERROR " + message + ", please contact <a>bugs@cork.world</a>", Theme.error);
 		return false;
 	}, warning: function (message) {
 		Cork.IO.write("CORK IO SERVICE: Warning " + message + ", please contact <a>bugs@cork.world</a>", Theme.warning);
 		return false;
-	}, init: function (game) {
+	}, init: function () {
 		Cork.Theme.load();
-		Cork.IO.title(game);
+		Cork.IO.title();
 		Cork.IO.score();
 	}
 };

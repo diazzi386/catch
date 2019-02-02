@@ -14,7 +14,7 @@ window.onload = function () {
 		Cork.IO.buffer.length = 0;
 		Cork.IO.write("> " + command, Theme.done);
 		Cork.IO.get('command').value = "";
-		Cork.IO.parser.parse(command.toLowerCase());
+		Cork.IO.parser.parse(command.toLowerCase().trim());
 		Game._STORY.advance();
 
 		for (var i = 0; i < Cork.IO.buffer.length; i++)

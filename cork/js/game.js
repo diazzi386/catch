@@ -1,25 +1,3 @@
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//
-// Luca Diazzi <diazzi386@gmail.com> for Cork
-// Felix Pleșoianu <felixp7@yahoo.com> for Jaiffa
-// David A. Wheeler <dwheeler@dwheeler.com> for Jiffo
-
 Game = {
 	_STORY: null,
 	_ROOM: null,
@@ -111,11 +89,28 @@ Game.Story = function (title) {
 	this.tagline = "A text adventure";
 	this.blurb = "";
 	this.about = "See also: help, credits.";
-	this.credits = "Based on the Jiffo library by David A. Wheeler, which was based on the Jaiffa library by Felix Pleșoianu.";
+	this.credits = "A game by Felix Pleșoianu";
 	this.player = new Game.Actor("yourself");
 	this.player.altname("myself", "me");
 	this.version = null;
 	this.first_room = null;
+	this.license = 
+		"The MIT License (MIT)\n" +
+		"Permission is hereby granted, free of charge, to any person obtaining a copy\n" +
+		"of this software and associated documentation files (the \"Software\"), to deal\n" +
+		"in the Software without restriction, including without limitation the rights\n" +
+		"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n" +
+		"copies of the Software, and to permit persons to whom the Software is\n" +
+		"furnished to do so, subject to the following conditions:\n\n" +
+		"The above copyright notice and this permission notice shall be included in all\n" +
+		"copies or substantial portions of the Software.\n\n" +
+		"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
+		"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
+		"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
+		"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
+		"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
+		"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
+		"SOFTWARE.\n\n";
 };
 
 Game.Story.prototype = {
@@ -158,17 +153,23 @@ Game.Story.prototype = {
 	}, $wait: function (actor) {
 		Game.say("You wait. Time passes.");
 	}, $help: function (actor) {
-		Game.say("Direct the game with one- to three-word commands.");
-		Game.say("For example: 'look', 'pick up key', 'examine it',"
-			+ " 'inventory', 'go north'. Some of these have"
-			+ " abbreviations: 'l', 't key', 'x', 'i', 'n'.");
-		Game.say("But do try any other command that makes sense."
-			+ " E.g. many objects have an 'use' verb.");
-		Game.say("See also: about, credits.");
+		Game.say(
+			"Direct the game with one- to three-word commands.\n"
+			+ "For example: 'look', 'pick up key', 'examine it',"
+			+ " 'inventory', 'go north'.\n"
+			+ "Some of these have abbreviations, like"
+			+ " 'l', 't key', 'x', 'i', 'n'.\n"
+			+ "Feel free to try any other command that makes sense,"
+			+ " e.g. many objects have an 'use' verb.\n"
+			+ "See also: 'about', 'credits', 'license'.");
 	}, $about: function (actor) {
 		Game.say(this.about);
 	}, $credits: function (actor) {
-		Game.say(this.credits);
+		Game.say(
+			this.title + "\n" +
+			this.tagline + " by " + this.author + "\n" +
+			this.credits
+		);
 	}, $version: function (actor) {
 		Game.say(this.version);
 	}, $score: function (actor) {
@@ -181,6 +182,8 @@ Game.Story.prototype = {
 		for (var i = 0; i < TO_DO.length; i++)
 			Cork.IO.parser.parse(command[i].toLowerCase())
 		localStorage["save"] = [];
+	}, $license: function () {
+		Game.say(this.license);
 	}
 };
 
