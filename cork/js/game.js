@@ -111,6 +111,15 @@ Cork.Story = function (title) {
 		"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
 		"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
 		"SOFTWARE.\n\n";
+	this.help =
+		"Direct the game with one- to three-word commands.\n"
+		+ "For example: 'look', 'pick up key', 'examine it',"
+		+ " 'inventory', 'go north'.\n"
+		+ "Some of these have abbreviations, like"
+		+ " 'l', 't key', 'x', 'i', 'n'.\n"
+		+ "Feel free to try any other command that makes sense,"
+		+ " e.g. many objects have an 'use' verb.\n"
+		+ "See also: 'about', 'credits', 'license'.\n\n";
 };
 
 Cork.Story.prototype = {
@@ -153,15 +162,7 @@ Cork.Story.prototype = {
 	}, $wait: function (actor) {
 		Cork.say("You wait. Time passes.");
 	}, $help: function (actor) {
-		Cork.say(
-			"Direct the GAME with one- to three-word commands.\n"
-			+ "For example: 'look', 'pick up key', 'examine it',"
-			+ " 'inventory', 'go north'.\n"
-			+ "Some of these have abbreviations, like"
-			+ " 'l', 't key', 'x', 'i', 'n'.\n"
-			+ "Feel free to try any other command that makes sense,"
-			+ " e.g. many objects have an 'use' verb.\n"
-			+ "See also: 'about', 'credits', 'license'.");
+		Cork.say(this.help);
 	}, $about: function (actor) {
 		Cork.say(this.about);
 	}, $credits: function (actor) {
