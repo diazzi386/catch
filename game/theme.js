@@ -8,6 +8,6 @@ var Theme = {
 	block: "&block;",
 	error: "bg-red",
 	warning: "bg-deeporange",
-	score: "fg-white",
+	score: "fg-white bg-amber",
 	achievement: "fg-amber",
 }
